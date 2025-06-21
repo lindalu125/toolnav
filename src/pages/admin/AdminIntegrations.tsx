@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -12,7 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ImportTools } from '@/components/admin/ImportTools';
 import { AdManagement } from '@/components/admin/AdManagement';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Globe, Mail, Webhook, Upload, Ad } from 'lucide-react';
+import { Globe, Mail, Webhook as WebhookIcon, Upload, Ad } from 'lucide-react';
 import type { Webhook, Subscriber, ScrapeTask } from '@/types/ads';
 
 export const AdminIntegrations = () => {
@@ -174,7 +173,7 @@ export const AdminIntegrations = () => {
             邮件订阅
           </TabsTrigger>
           <TabsTrigger value="webhooks">
-            <Webhook className="h-4 w-4 mr-2" />
+            <WebhookIcon className="h-4 w-4 mr-2" />
             Webhook
           </TabsTrigger>
           <TabsTrigger value="import">
