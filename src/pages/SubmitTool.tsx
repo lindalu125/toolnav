@@ -1,45 +1,69 @@
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useToast } from '@/components/ui/use-toast';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
-import { useToast } from '@/hooks/use-toast';
+import { AutoScrapeForm } from '@/components/AutoScrapeForm';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function SubmitTool() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
+    description: '',
     url: '',
-    category: '',
-    description: ''
+    category: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const categories = i18n.language === 'zh' 
-    ? ['生产力', '设计', '开发', '营销', '分析', '通讯', 'AI工具', '写作', '项目管理', '其他']
-    : ['Productivity', 'Design', 'Development', 'Marketing', 'Analytics', 'Communication', 'AI Tools', 'Writing', 'Project Management', 'Other'];
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // 模拟提交逻辑
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      const { error } = await supabase
+        .from('user_tools')
+        .insert({
+          name: formData.name,
+          description: formData.description,
+          url: formData.url,
+          status: 'pending'
+        });
+
+      if (error) throw error;
+
       toast({
         title: t('submit.success'),
-        description: i18n.language === 'zh' ? '我们会尽快审核您提交的工具' : 'We will review your submitted tool as soon as possible',
+        description: t('submit.successMessage'),
       });
 
-      setFormData({ name: '', url: '', category: '', description: '' });
+      // Reset form
+      setFormData({
+        name: '',
+        description: '',
+        url: '',
+        category: ''
+      });
     } catch (error) {
+      console.error('Error submitting tool:', error);
       toast({
         title: t('submit.error'),
+        description: t('submit.errorMessage'),
         variant: 'destructive',
       });
     } finally {
@@ -63,104 +87,107 @@ export default function SubmitTool() {
               <Link to="/blog" className="text-gray-600 hover:text-gray-900">
                 {t('nav.blog')}
               </Link>
-              <span className="text-gray-900 font-medium">{t('nav.submit')}</span>
+              <Link to="/submit" className="text-gray-900 font-medium">
+                {t('nav.submit')}
+              </Link>
               <LanguageSwitcher />
             </div>
           </div>
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 py-16 max-w-2xl">
+      <div className="container mx-auto px-4 py-16 max-w-4xl">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {t('submit.title')}
           </h1>
           <p className="text-xl text-gray-600">
-            {t('submit.description')}
+            {t('submit.subtitle')}
           </p>
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              {i18n.language === 'zh' ? '工具信息' : 'Tool Information'}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('submit.name')} *
-                </label>
-                <Input
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder={i18n.language === 'zh' ? '请输入工具名称' : 'Enter tool name'}
-                  required
-                />
-              </div>
+        <Tabs defaultValue="auto" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="auto">{t('submit.autoScrape')}</TabsTrigger>
+            <TabsTrigger value="manual">{t('submit.manualSubmit')}</TabsTrigger>
+          </TabsList>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('submit.url')} *
-                </label>
-                <Input
-                  type="url"
-                  value={formData.url}
-                  onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-                  placeholder="https://example.com"
-                  required
-                />
-              </div>
+          <TabsContent value="auto">
+            <AutoScrapeForm />
+          </TabsContent>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('submit.category')} *
-                </label>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, category })}
-                      className={`p-2 text-sm rounded-lg border transition-colors ${
-                        formData.category === category
-                          ? 'bg-blue-50 border-blue-300 text-blue-700'
-                          : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
-                      }`}
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              </div>
+          <TabsContent value="manual">
+            <Card>
+              <CardHeader>
+                <CardTitle>{t('submit.manualForm')}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('submit.toolName')}
+                    </label>
+                    <Input
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                      placeholder={t('submit.toolNamePlaceholder')}
+                    />
+                  </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {i18n.language === 'zh' ? '工具描述' : 'Tool Description'}
-                </label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder={i18n.language === 'zh' ? '简单描述这个工具的功能和特点' : 'Briefly describe the features and characteristics of this tool'}
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+                  <div>
+                    <label htmlFor="url" className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('submit.url')}
+                    </label>
+                    <Input
+                      id="url"
+                      name="url"
+                      type="url"
+                      value={formData.url}
+                      onChange={handleInputChange}
+                      required
+                      placeholder={t('submit.urlPlaceholder')}
+                    />
+                  </div>
 
-              <Button 
-                type="submit" 
-                className="w-full"
-                disabled={isSubmitting || !formData.name || !formData.url || !formData.category}
-              >
-                {isSubmitting 
-                  ? (i18n.language === 'zh' ? '提交中...' : 'Submitting...') 
-                  : t('submit.submit')
-                }
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+                  <div>
+                    <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('submit.description')}
+                    </label>
+                    <Textarea
+                      id="description"
+                      name="description"
+                      value={formData.description}
+                      onChange={handleInputChange}
+                      required
+                      rows={4}
+                      placeholder={t('submit.descriptionPlaceholder')}
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
+                      {t('submit.category')}
+                    </label>
+                    <Input
+                      id="category"
+                      name="category"
+                      value={formData.category}
+                      onChange={handleInputChange}
+                      placeholder={t('submit.categoryPlaceholder')}
+                    />
+                  </div>
+
+                  <Button type="submit" disabled={isSubmitting} className="w-full">
+                    {isSubmitting ? t('submit.submitting') : t('submit.submitButton')}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

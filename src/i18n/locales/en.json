@@ -2,29 +2,55 @@
 {
   "nav": {
     "home": "Home",
-    "tools": "Tools",
     "blog": "Blog",
-    "about": "About",
     "submit": "Submit Tool"
   },
   "blog": {
-    "title": "Blog",
-    "subtitle": "Latest News & Deep Insights",
+    "title": "Tech Blog",
+    "subtitle": "Explore the latest technology trends and tool usage guides",
     "readMore": "Read More",
+    "backToBlog": "Back to Blog",
     "publishedOn": "Published on",
-    "tags": "Tags",
     "share": "Share",
-    "relatedPosts": "Related Posts",
-    "backToBlog": "Back to Blog"
+    "relatedPosts": "Related Posts"
   },
   "submit": {
     "title": "Submit Tool",
-    "description": "Share the great tools you've discovered",
-    "name": "Tool Name",
+    "subtitle": "Share the excellent AI tools you've discovered",
+    "autoScrape": "Auto Scrape",
+    "manualSubmit": "Manual Submit",
+    "manualForm": "Manual Form",
+    "toolName": "Tool Name",
+    "toolNamePlaceholder": "Enter tool name",
     "url": "Tool URL",
+    "urlPlaceholder": "https://example.com",
+    "description": "Tool Description",
+    "descriptionPlaceholder": "Describe the tool's features and use cases in detail",
     "category": "Category",
-    "submit": "Submit",
-    "success": "Submitted successfully!",
-    "error": "Submission failed, please try again"
+    "categoryPlaceholder": "e.g., AI Writing, Image Generation, Data Analysis",
+    "submitButton": "Submit Tool",
+    "submitting": "Submitting...",
+    "success": "Submit Success",
+    "successMessage": "Your tool has been submitted and is awaiting review",
+    "error": "Submit Failed",
+    "errorMessage": "Error occurred while submitting the tool, please try again"
+  },
+  "scrape": {
+    "title": "Auto-scrape Tool Information",
+    "urlPlaceholder": "Enter tool URL for automatic scraping",
+    "scrapeButton": "Start Scraping",
+    "scraping": "Scraping...",
+    "results": "Scraping Results",
+    "features": "Features",
+    "screenshots": "Screenshots",
+    "saveToDatabase": "Save to Database",
+    "success": "Scraping Success",
+    "successDesc": "Tool information has been successfully scraped",
+    "error": "Scraping Failed",
+    "errorDesc": "Unable to scrape website information, please try manual submission",
+    "saved": "Saved Successfully",
+    "savedDesc": "Tool has been saved and is awaiting review",
+    "saveError": "Save Failed",
+    "saveErrorDesc": "Error occurred while saving the tool"
   }
 }

@@ -2,29 +2,55 @@
 {
   "nav": {
     "home": "首页",
-    "tools": "工具",
-    "blog": "博客",
-    "about": "关于",
+    "blog": "博客", 
     "submit": "提交工具"
   },
   "blog": {
-    "title": "博客",
-    "subtitle": "最新资讯与深度见解",
+    "title": "技术博客",
+    "subtitle": "探索最新技术趋势和工具使用指南",
     "readMore": "阅读更多",
+    "backToBlog": "返回博客",
     "publishedOn": "发布于",
-    "tags": "标签",
     "share": "分享",
-    "relatedPosts": "相关文章",
-    "backToBlog": "返回博客"
+    "relatedPosts": "相关文章"
   },
   "submit": {
     "title": "提交工具",
-    "description": "分享你发现的优秀工具",
-    "name": "工具名称",
+    "subtitle": "分享你发现的优秀AI工具",
+    "autoScrape": "自动抓取",
+    "manualSubmit": "手动提交",
+    "manualForm": "手动填写表单",
+    "toolName": "工具名称",
+    "toolNamePlaceholder": "请输入工具名称",
     "url": "工具网址",
+    "urlPlaceholder": "https://example.com",
+    "description": "工具描述",
+    "descriptionPlaceholder": "详细描述这个工具的功能和用途",
     "category": "分类",
-    "submit": "提交",
-    "success": "提交成功！",
-    "error": "提交失败，请重试"
+    "categoryPlaceholder": "例如：AI写作、图像生成、数据分析",
+    "submitButton": "提交工具",
+    "submitting": "提交中...",
+    "success": "提交成功",
+    "successMessage": "您的工具已提交，等待审核",
+    "error": "提交失败",
+    "errorMessage": "提交工具时出现错误，请重试"
+  },
+  "scrape": {
+    "title": "自动抓取工具信息",
+    "urlPlaceholder": "请输入工具网址进行自动抓取",
+    "scrapeButton": "开始抓取",
+    "scraping": "抓取中...",
+    "results": "抓取结果",
+    "features": "功能特点",
+    "screenshots": "截图",
+    "saveToDatabase": "保存到数据库",
+    "success": "抓取成功",
+    "successDesc": "工具信息已成功抓取",
+    "error": "抓取失败",
+    "errorDesc": "无法抓取该网站信息，请尝试手动提交",
+    "saved": "保存成功",
+    "savedDesc": "工具已保存，等待审核",
+    "saveError": "保存失败",
+    "saveErrorDesc": "保存工具时出现错误"
   }
 }
