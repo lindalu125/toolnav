@@ -1,3 +1,4 @@
+"build:dev": "vite build --mode development"
 {
   "dependencies": {
     "react-helmet-async": "^2.0.5"
