@@ -164,7 +164,7 @@ export const ImportTools = () => {
             disabled={importing}
           />
           <p className="text-sm text-gray-500 mt-1">
-            JSON格式示例: [{"name": "工具名称", "url": "https://example.com", "description": "描述"}]
+            JSON格式示例: {`[{"name": "工具名称", "url": "https://example.com", "description": "描述"}]`}
           </p>
         </div>
 
