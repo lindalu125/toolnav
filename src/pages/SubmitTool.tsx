@@ -5,12 +5,11 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { useToast } from '@/hooks/use-toast';
 
 export default function SubmitTool() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
@@ -20,9 +19,9 @@ export default function SubmitTool() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const categories = [
-    '生产力', '设计', '开发', '营销', '分析', '通讯', 'AI工具', '写作', '项目管理', '其他'
-  ];
+  const categories = i18n.language === 'zh' 
+    ? ['生产力', '设计', '开发', '营销', '分析', '通讯', 'AI工具', '写作', '项目管理', '其他']
+    : ['Productivity', 'Design', 'Development', 'Marketing', 'Analytics', 'Communication', 'AI Tools', 'Writing', 'Project Management', 'Other'];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +33,7 @@ export default function SubmitTool() {
       
       toast({
         title: t('submit.success'),
-        description: '我们会尽快审核您提交的工具',
+        description: i18n.language === 'zh' ? '我们会尽快审核您提交的工具' : 'We will review your submitted tool as soon as possible',
       });
 
       setFormData({ name: '', url: '', category: '', description: '' });
@@ -83,7 +82,9 @@ export default function SubmitTool() {
 
         <Card>
           <CardHeader>
-            <CardTitle>工具信息</CardTitle>
+            <CardTitle>
+              {i18n.language === 'zh' ? '工具信息' : 'Tool Information'}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -94,7 +95,7 @@ export default function SubmitTool() {
                 <Input
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="请输入工具名称"
+                  placeholder={i18n.language === 'zh' ? '请输入工具名称' : 'Enter tool name'}
                   required
                 />
               </div>
@@ -136,12 +137,12 @@ export default function SubmitTool() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  工具描述
+                  {i18n.language === 'zh' ? '工具描述' : 'Tool Description'}
                 </label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="简单描述这个工具的功能和特点"
+                  placeholder={i18n.language === 'zh' ? '简单描述这个工具的功能和特点' : 'Briefly describe the features and characteristics of this tool'}
                   rows={4}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -152,7 +153,10 @@ export default function SubmitTool() {
                 className="w-full"
                 disabled={isSubmitting || !formData.name || !formData.url || !formData.category}
               >
-                {isSubmitting ? '提交中...' : t('submit.submit')}
+                {isSubmitting 
+                  ? (i18n.language === 'zh' ? '提交中...' : 'Submitting...') 
+                  : t('submit.submit')
+                }
               </Button>
             </form>
           </CardContent>
