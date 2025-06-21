@@ -1,0 +1,30 @@
+
+{
+  "nav": {
+    "home": "首页",
+    "tools": "工具",
+    "blog": "博客",
+    "about": "关于",
+    "submit": "提交工具"
+  },
+  "blog": {
+    "title": "博客",
+    "subtitle": "最新资讯与深度见解",
+    "readMore": "阅读更多",
+    "publishedOn": "发布于",
+    "tags": "标签",
+    "share": "分享",
+    "relatedPosts": "相关文章",
+    "backToBlog": "返回博客"
+  },
+  "submit": {
+    "title": "提交工具",
+    "description": "分享你发现的优秀工具",
+    "name": "工具名称",
+    "url": "工具网址",
+    "category": "分类",
+    "submit": "提交",
+    "success": "提交成功！",
+    "error": "提交失败，请重试"
+  }
+}

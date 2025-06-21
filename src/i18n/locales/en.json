@@ -1,0 +1,30 @@
+
+{
+  "nav": {
+    "home": "Home",
+    "tools": "Tools",
+    "blog": "Blog",
+    "about": "About",
+    "submit": "Submit Tool"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Latest News & Deep Insights",
+    "readMore": "Read More",
+    "publishedOn": "Published on",
+    "tags": "Tags",
+    "share": "Share",
+    "relatedPosts": "Related Posts",
+    "backToBlog": "Back to Blog"
+  },
+  "submit": {
+    "title": "Submit Tool",
+    "description": "Share the great tools you've discovered",
+    "name": "Tool Name",
+    "url": "Tool URL",
+    "category": "Category",
+    "submit": "Submit",
+    "success": "Submitted successfully!",
+    "error": "Submission failed, please try again"
+  }
+}
